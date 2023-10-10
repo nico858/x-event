@@ -1,6 +1,5 @@
 import { Sequelize } from 'sequelize';
 
-
 import { config } from '../../src/config/config.js';
 
 export const connection = new Sequelize(config.dbLink, {

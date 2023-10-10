@@ -24,6 +24,7 @@ export const UserModel = (connection, DataTypes) => {
         type: DataTypes.STRING
       },
       nickName: {
+        field: 'nick_name',
         allowNull: false,
         type: DataTypes.STRING,
         unique: true,

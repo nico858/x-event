@@ -1,5 +1,6 @@
 import express from 'express';
 
+import userRouter from './user.router.js';
 // import addressRouter from './address.router.js';
 // import orderDateRouter from './orderDate.router.js';
 // import orderDetailRouter from './orderDetail.router.js';
@@ -15,6 +16,7 @@ export default function routerApi(app) {
   
   app.use('/', router);
 
+  router.use('/user', userRouter);
 //   router.use('/address', addressRouter);
 //   router.use('/orderDate', orderDateRouter);
 //   router.use('/orderDetail', orderDetailRouter);
