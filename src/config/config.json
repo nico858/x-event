@@ -1,0 +1,16 @@
+{
+    "development": {
+      "username": "xevent_user",
+      "password": "aMA8LUufWf5xe6A4F9Z7iljkfztRerVU",
+      "database": "xevent",
+      "host": "dpg-cki4hnke1qns73en99t0-a.oregon-postgres.render.com",
+      "dialect": "postgres"
+    },
+    "production": {
+      "username": "xevent_user",
+      "password": "aMA8LUufWf5xe6A4F9Z7iljkfztRerVU",
+      "database": "xevent",
+      "host": "dpg-cki4hnke1qns73en99t0-a.oregon-postgres.render.com",
+      "dialect": "postgres"
+    }
+  }

@@ -7,3 +7,23 @@ const description = Joi.string().min(5).max(40);
 const cost = Joi.number().double();
 const state = Joi.string();
 const active = Joi.boolean();
+
+export const createActivitySchema = Joi.object({
+    eventId: eventId.required(),
+    creatorId: creatorId.required(),
+    description: description.required(),
+    cost: cost.required(),
+    state: state.required(),
+});
+  
+export const updateActivitySchema = Joi.object({
+    eventId: eventId,
+    creatorId: creatorId,
+    description: description,
+    cost: cost,
+    state: state,
+});
+  
+export const getActivitySchema = Joi.object({
+   id: id.required(),
+});
