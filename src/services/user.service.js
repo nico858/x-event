@@ -24,7 +24,7 @@ export default class UserService {
   }
 
   async update(id, changes) {
-    const user = await User.findOne(id);
+    const user = await this.findOne(id);
     const response = await user.update(changes);
     return response;
   }

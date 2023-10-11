@@ -169,29 +169,42 @@ router.post('/',
   }
 );
 
-// router.patch('/:addressId',
-// //   validatorHandler(getUserSchema, 'params'),
-// //   validatorHandler(updateUserSchema, 'body'),
+router.patch('/:id',
+//   validatorHandler(getUserSchema, 'params'),
+//   validatorHandler(updateUserSchema, 'body'),
+  async (req, res, next) => {
+    try {
+      const { id } = req.params;
+      const body = req.body;
+      const user = await service.update(id, body);
+      res.json(user);
+    } catch (error) {
+      next(error);
+    }
+  }
+);
+
+// router.delete('/:id',
+//   passport.authenticate('jwt', { session: false }),
+//   validatorHandler(getUserSchema, 'params'),
 //   async (req, res, next) => {
 //     try {
-//       const { addressId } = req.params;
-//       const body = req.body;
-//       const address = await service.update(addressId, body);
-//       res.json(address);
+//       const { id } = req.params;
+//       await service.delete(id);
+//       res.status(201).json({id});
 //     } catch (error) {
 //       next(error);
 //     }
 //   }
 // );
 
-// router.delete('/:addressId',
-//   passport.authenticate('jwt', { session: false }),
-//   validatorHandler(getUserSchema, 'params'),
+// router.patch('/logic-delete/:id',
+// //   validatorHandler(getUserSchema, 'params'),
 //   async (req, res, next) => {
 //     try {
-//       const { addressId } = req.params;
-//       await service.delete(addressId);
-//       res.status(201).json({addressId});
+//       const { id } = req.params;
+//       await service.update(id, { active: 'inactive' });
+//       res.status(201).json({id});
 //     } catch (error) {
 //       next(error);
 //     }
