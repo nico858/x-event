@@ -2,142 +2,169 @@
  * @swagger
  * components:
  *  schemas:
- *   Address:
+ *   Activity:
  *    type: object
  *    required:
- *      - nomencature
- *      - detail
+ *      - eventId
+ *      - creatorId
+ *      - description
+ *      - cost
+ *      - state
  *    properties:
  *      id:
  *        type: integer
- *        description: The auto-generated id of the address
- *      clientId:
+ *        description: The auto-generated id of the user.
+ *      eventId:
+ *        type: integer
+ *        description: Id of the event to which it belongs.
+ *      creatorId:
  *        type: string
- *        description: The client id
- *      nomencature:
+ *        description: Id of the activity creator.
+ *      description:
  *        type: string
- *        description: The address nomencature
- *      detail:
+ *        description: Activity description.
+ *      cost:
+ *        type: double
+ *        description: Activity cost.
+ *      state:
  *        type: string
- *        description: The address detail
+ *        description: Activity state.
 */
 /**
  * @swagger
  * tags:
- *   name: Address
- *   description: The address managing API
- * /address:
+ *   name: Activity
+ *   description: The activities managing API
+ * /activity:
  *   get:
- *     summary: Lists all the addresses
- *     tags: [Address]
+ *     summary: Lists all the users
+ *     tags: [Activity]
  *     responses:
  *       200:
- *         description: The list of the addresses
+ *         description: The list of the activities
  *         content:
  *           application/json:
  *             schema:
  *               type: array
  *               items:
- *                 $ref: '#/components/schemas/Address'
+ *                 $ref: '#/components/schemas/Activity'
  *   post:
- *     summary: Create a new address
- *     tags: [Address]
+ *     summary: Create a new Activity
+ *     tags: [Activity]
  *     requestBody:
  *       required: true
  *       content:
  *         application/json:
  *           schema:
- *             $ref: '#/components/schemas/Address'
+ *             $ref: '#/components/schemas/Activity'
  *     responses:
  *       200:
- *         description: The created address.
+ *         description: The created Activity.
  *         content:
  *           application/json:
  *             schema:
- *               $ref: '#/components/schemas/Address'
+ *               $ref: '#/components/schemas/Activity'
  *       500:
  *         description: Some server error
- * /address/{id}:
+ * /activity/{id}:
  *   get:
- *     summary: Get the address by id
- *     tags: [Address]
+ *     summary: Get the Activity by id
+ *     tags: [Activity]
  *     parameters:
  *       - in: path
  *         name: id
  *         schema:
  *           type: string
  *         required: true
- *         description: The address id
+ *         description: The Activity id
  *     responses:
  *       200:
- *         description: The address response by id
+ *         description: The Activity response by id
  *         contens:
  *           application/json:
  *             schema:
- *               $ref: '#/components/schemas/Address'
+ *               $ref: '#/components/schemas/Activity'
  *       404:
- *         description: The address was not found
+ *         description: The Activity was not found
  *   patch:
- *    summary: Update the address by the id
- *    tags: [Address]
+ *    summary: Update the Activity by the id
+ *    tags: [Activity]
  *    parameters:
  *      - in: path
  *        name: id
  *        schema:
  *          type: string
  *        required: true
- *        description: The address id
+ *        description: The Activity id
  *    requestBody:
  *      required: true
  *      content:
  *        application/json:
  *          schema:
- *            $ref: '#/components/schemas/Address'
+ *            $ref: '#/components/schemas/Activity'
  *    responses:
  *      200:
- *        description: The address was updated
+ *        description: The Activity was updated
  *        content:
  *          application/json:
  *            schema:
- *              $ref: '#/components/schemas/Address'
+ *              $ref: '#/components/schemas/Activity'
  *      404:
- *        description: The address was not found
+ *        description: The Activity was not found
  *      500:
  *        description: Some error happened
  *   delete:
- *     summary: Remove the address by id
- *     tags: [Address]
+ *     summary: Remove the Activity by id
+ *     tags: [Activity]
  *     parameters:
  *       - in: path
  *         name: id
  *         schema:
  *           type: string
  *         required: true
- *         description: The address id
+ *         description: The Activity id
  *
  *     responses:
  *       200:
- *         description: The address was deleted
+ *         description: The Activity was deleted
  *       404:
- *         description: The address was not found
+ *         description: The Activity was not found
+ * /activity/logic-delete/{id}:  
+ *   patch:
+ *     summary: Deactivate Activity by id
+ *     tags: [Activity]
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         schema:
+ *           type: string
+ *         required: true
+ *         description: The Activity id
+ *     responses:
+ *       200:
+ *         description: The Activity was disabled
+ *       404:
+ *         description: The user was not found
+ *       500:
+ *         description: Some error happened
  */
 
 
 import express from 'express';
 
-import UserService from '../services/user.service.js';
+import ActivityService from '../services/activity.service.js';
 // import { updateUserSchema, createUserSchema, getUserSchema } from '../schemas/address.schema.js';
 
 const router = express.Router();
-const service = new UserService();
+const service = new ActivityService();
 
 
 
 router.get('/', 
   async (req, res, next) => {
   try {
-    const user = await service.find();
-    res.json(user);
+    const activity = await service.find();
+    res.json(activity);
   } catch (error) {
     next(error);
   }
@@ -148,8 +175,8 @@ router.get('/:id',
   async (req, res, next) => {
     try {
       const { id } = req.params;
-      const user = await service.findOne(id);
-      res.json(user);
+      const activity = await service.findOne(id);
+      res.json(activity);
     } catch (error) {
       next(error);
     }
@@ -161,8 +188,8 @@ router.post('/',
   async (req, res, next) => {
     try {
       const body = req.body;
-      const newUser = await service.create(body);
-      res.status(201).json(newUser);
+      const newActivity = await service.create(body);
+      res.status(201).json(newActivity);
     } catch (error) {
       next(error);
     }
@@ -176,8 +203,8 @@ router.patch('/:id',
     try {
       const { id } = req.params;
       const body = req.body;
-      const user = await service.update(id, body);
-      res.json(user);
+      const activity = await service.update(id, body);
+      res.json(activity);
     } catch (error) {
       next(error);
     }
