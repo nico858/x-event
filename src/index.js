@@ -47,13 +47,13 @@ app.use(
 )
 
 
-await connection.sync({ force: true }, async () => {
-    try {
-        console.log('Database sync');
-    } catch (error) {
-        console.error('Unable to sync to the database:', error);
-    }
-});
+// await connection.sync({ force: true }, async () => {
+//     try {
+//         console.log('Database sync');
+//     } catch (error) {
+//         console.error('Unable to sync to the database:', error);
+//     }
+// });
 
 app.listen(port, async () => {
     try{

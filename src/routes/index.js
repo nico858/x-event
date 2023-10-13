@@ -1,7 +1,7 @@
 import express from 'express';
 
 // routes for new project
-import eventRouter from './events.router.js';
+// import eventRouter from './events.router.js';
 
 import userRouter from './user.router.js';
 // import addressRouter from './address.router.js';
@@ -18,7 +18,7 @@ export default function routerApi(app) {
   app.use(express.json());
   
   app.use('/', router);
-  router.use('/eventCreation', eventRouter);
+  // router.use('/eventCreation', eventRouter);
 
   router.use('/user', userRouter);
 //   router.use('/address', addressRouter);
