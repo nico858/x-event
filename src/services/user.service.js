@@ -36,7 +36,9 @@ export default class UserService {
   }
 
   async logicDelete(id) {
-    const user = await User.findOne(id);
-    const response = await user.update({ active: 'inactive' });
+    const user = await this.findOne(id);
+    const updateActive = { active: 'inactive' };
+    const response = await user.update(updateActive);
+    return response;
   }
 }

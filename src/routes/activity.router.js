@@ -2,158 +2,124 @@
  * @swagger
  * components:
  *  schemas:
- *   User:
+ *   Address:
  *    type: object
  *    required:
- *      - firstName
- *      - lastName
- *      - email
- *      - password
- *      - nickName
+ *      - nomencature
+ *      - detail
  *    properties:
  *      id:
  *        type: integer
- *        description: The auto-generated id of the user
- *      firstName:
+ *        description: The auto-generated id of the address
+ *      clientId:
  *        type: string
- *        description: User name.
- *      lastName:
+ *        description: The client id
+ *      nomencature:
  *        type: string
- *        description: User lastname
- *      email:
+ *        description: The address nomencature
+ *      detail:
  *        type: string
- *        description: User email
- *      password:
- *        type: string
- *        description: User password
- *      nickName:
- *        type: string
- *        description: User nickname. I'll be use in the API.
- *      photo:
- *        type: string
- *        description: User photo. I'll be shown in the API.
+ *        description: The address detail
 */
 /**
  * @swagger
  * tags:
- *   name: User
- *   description: The users managing API
- * /user:
+ *   name: Address
+ *   description: The address managing API
+ * /address:
  *   get:
- *     summary: Lists all the users
- *     tags: [User]
+ *     summary: Lists all the addresses
+ *     tags: [Address]
  *     responses:
  *       200:
- *         description: The list of the users
+ *         description: The list of the addresses
  *         content:
  *           application/json:
  *             schema:
  *               type: array
  *               items:
- *                 $ref: '#/components/schemas/User'
+ *                 $ref: '#/components/schemas/Address'
  *   post:
- *     summary: Create a new user
- *     tags: [User]
+ *     summary: Create a new address
+ *     tags: [Address]
  *     requestBody:
  *       required: true
  *       content:
  *         application/json:
  *           schema:
- *             $ref: '#/components/schemas/User'
+ *             $ref: '#/components/schemas/Address'
  *     responses:
  *       200:
- *         description: The created user.
+ *         description: The created address.
  *         content:
  *           application/json:
  *             schema:
- *               $ref: '#/components/schemas/User'
+ *               $ref: '#/components/schemas/Address'
  *       500:
  *         description: Some server error
- * /user/{id}:
+ * /address/{id}:
  *   get:
- *     summary: Get the user by id
- *     tags: [User]
+ *     summary: Get the address by id
+ *     tags: [Address]
  *     parameters:
  *       - in: path
  *         name: id
  *         schema:
  *           type: string
  *         required: true
- *         description: The user id
+ *         description: The address id
  *     responses:
  *       200:
- *         description: The user response by id
+ *         description: The address response by id
  *         contens:
  *           application/json:
  *             schema:
- *               $ref: '#/components/schemas/User'
+ *               $ref: '#/components/schemas/Address'
  *       404:
- *         description: The user was not found
+ *         description: The address was not found
  *   patch:
- *    summary: Update the user by the id
- *    tags: [User]
+ *    summary: Update the address by the id
+ *    tags: [Address]
  *    parameters:
  *      - in: path
  *        name: id
  *        schema:
  *          type: string
  *        required: true
- *        description: The user id
+ *        description: The address id
  *    requestBody:
  *      required: true
  *      content:
  *        application/json:
  *          schema:
- *            $ref: '#/components/schemas/User'
+ *            $ref: '#/components/schemas/Address'
  *    responses:
  *      200:
- *        description: The user was updated
+ *        description: The address was updated
  *        content:
  *          application/json:
  *            schema:
- *              $ref: '#/components/schemas/User'
+ *              $ref: '#/components/schemas/Address'
  *      404:
- *        description: The user was not found
+ *        description: The address was not found
  *      500:
  *        description: Some error happened
  *   delete:
- *     summary: Remove the user by id
- *     tags: [User]
+ *     summary: Remove the address by id
+ *     tags: [Address]
  *     parameters:
  *       - in: path
  *         name: id
  *         schema:
  *           type: string
  *         required: true
- *         description: The user id
+ *         description: The address id
  *
  *     responses:
  *       200:
- *         description: The user was deleted
+ *         description: The address was deleted
  *       404:
- *         description: The user was not found
- * /logic-delete/{id}:  
- *   patch:
- *     summary: Deactivate user by id
- *     tags: [User]
- *     parameters:
- *       - in: path
- *         name: id
- *         schema:
- *           type: string
- *         required: true
- *         description: The user id
- *     responses:
- *       200:
- *         description: The user was disabled
- *         content:
- *           application/json:
- *             schema:
- *               $ref: '#/components/schemas/User'
- *       404:
- *         description: The user was not found
- *       500:
- *         description: Some error happened
+ *         description: The address was not found
  */
 
 
@@ -237,7 +203,7 @@ router.patch('/logic-delete/:id',
   async (req, res, next) => {
     try {
       const { id } = req.params;
-      await service.logicDelete(id);
+      await service.update(id, { active: 'inactive' });
       res.status(201).json({id});
     } catch (error) {
       next(error);
