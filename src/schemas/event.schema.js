@@ -6,7 +6,7 @@ const name = Joi.string().min(5).max(40);
 const description = Joi.string().min(5).max(40);
 const type = Joi.string();
 const photo = Joi.binary();
-const cost = Joi.number().double();
+const cost = Joi.number().presicion(2);
 const active = Joi.boolean();
 
 export const createEventSchema = Joi.object({
