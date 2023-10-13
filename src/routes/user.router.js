@@ -184,31 +184,31 @@ router.patch('/:id',
   }
 );
 
-// router.delete('/:id',
-//   passport.authenticate('jwt', { session: false }),
-//   validatorHandler(getUserSchema, 'params'),
-//   async (req, res, next) => {
-//     try {
-//       const { id } = req.params;
-//       await service.delete(id);
-//       res.status(201).json({id});
-//     } catch (error) {
-//       next(error);
-//     }
-//   }
-// );
+router.delete('/:id',
+  // passport.authenticate('jwt', { session: false }),
+  // validatorHandler(getUserSchema, 'params'),
+  async (req, res, next) => {
+    try {
+      const { id } = req.params;
+      await service.delete(id);
+      res.status(201).json({id});
+    } catch (error) {
+      next(error);
+    }
+  }
+);
 
-// router.patch('/logic-delete/:id',
-// //   validatorHandler(getUserSchema, 'params'),
-//   async (req, res, next) => {
-//     try {
-//       const { id } = req.params;
-//       await service.update(id, { active: 'inactive' });
-//       res.status(201).json({id});
-//     } catch (error) {
-//       next(error);
-//     }
-//   }
-// );
+router.patch('/logic-delete/:id',
+//   validatorHandler(getUserSchema, 'params'),
+  async (req, res, next) => {
+    try {
+      const { id } = req.params;
+      await service.update(id, { active: 'inactive' });
+      res.status(201).json({id});
+    } catch (error) {
+      next(error);
+    }
+  }
+);
 
 export default router;

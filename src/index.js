@@ -57,8 +57,8 @@ await connection.sync({ force: true }, async () => {
 
 app.listen(port, async () => {
     try{
-        await connection.authenticate();
-        console.log('Connection has been established successfully.');
+        // await connection.authenticate();
+        // console.log('Connection has been established successfully.');
         console.log(`App listening at port: ${port}`)
     } catch (error) {
         console.error('Unable to connect to the database:', error);
