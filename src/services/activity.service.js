@@ -20,12 +20,16 @@ export default class ActivityService {
     if (!activity) {
       throw boom.notFound('Activity not found');
     }
-    return Activity;
+    return activity;
   }
 
   async update(id, changes) {
     const activity = await this.findOne(id);
+    console.log(`[3] activity: ${activity}`);
+    console.log(activity.id);
     const response = await activity.update(changes);
+    console.log(`[4] response: ${response}`);
+    console.log(response);
     return response;
   }
 

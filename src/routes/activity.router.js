@@ -203,7 +203,10 @@ router.patch('/:id',
   async (req, res, next) => {
     try {
       const { id } = req.params;
+      console.log(`[1] id: ${id}`);
       const body = req.body;
+      console.log(`[2] body: ${body}`);
+      console.log(body);
       const activity = await service.update(id, body);
       res.json(activity);
     } catch (error) {
