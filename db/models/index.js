@@ -11,7 +11,6 @@ export const connection = new Sequelize(config.dbLink, {
     }
 });
 
-// import connection from "../database.js";
 import { ActivityModel } from "./activity.model.js";
 import { BalanceModel } from "./balance.model.js";
 import { ContactsModel } from "./contacts.model.js";

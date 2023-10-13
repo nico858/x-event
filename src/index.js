@@ -46,19 +46,10 @@ app.use(
     swagger.setup(spacs)
 )
 
-
-// await connection.sync({ force: true }, async () => {
-//     try {
-//         console.log('Database sync');
-//     } catch (error) {
-//         console.error('Unable to sync to the database:', error);
-//     }
-// });
-
 app.listen(port, async () => {
     try{
-        // await connection.authenticate();
-        // console.log('Connection has been established successfully.');
+        await connection.authenticate();
+        console.log('Connection has been established successfully.');
         console.log(`App listening at port: ${port}`)
     } catch (error) {
         console.error('Unable to connect to the database:', error);
