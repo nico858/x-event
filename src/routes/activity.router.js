@@ -153,7 +153,8 @@
 import express from 'express';
 
 import ActivityService from '../services/activity.service.js';
-// import { updateUserSchema, createUserSchema, getUserSchema } from '../schemas/address.schema.js';
+import validatorHandler from '../middlewares/validator.hanlder.js';
+import { updateActivitySchema, createActivitySchema, getActivitySchema } from '../schemas/activity.schema.js';
 
 const router = express.Router();
 const service = new ActivityService();
@@ -171,7 +172,7 @@ router.get('/',
 });
 
 router.get('/:id',
-//   validatorHandler(getUserSchema, 'params'),
+  validatorHandler(getActivitySchema, 'params'),
   async (req, res, next) => {
     try {
       const { id } = req.params;
@@ -184,7 +185,7 @@ router.get('/:id',
 );
 
 router.post('/',
-//   validatorHandler(createUserSchema, 'body'),
+  validatorHandler(createActivitySchema, 'body'),
   async (req, res, next) => {
     try {
       const body = req.body;
@@ -197,8 +198,8 @@ router.post('/',
 );
 
 router.patch('/:id',
-//   validatorHandler(getUserSchema, 'params'),
-//   validatorHandler(updateUserSchema, 'body'),
+  validatorHandler(getActivitySchema, 'params'),
+  validatorHandler(updateActivitySchema, 'body'),
   async (req, res, next) => {
     try {
       const { id } = req.params;
@@ -212,8 +213,8 @@ router.patch('/:id',
 );
 
 router.delete('/:id',
-  // passport.authenticate('jwt', { session: false }),
-  // validatorHandler(getUserSchema, 'params'),
+  passport.authenticate('jwt', { session: false }),
+  validatorHandler(getActivitySchema, 'params'),
   async (req, res, next) => {
     try {
       const { id } = req.params;
@@ -226,7 +227,7 @@ router.delete('/:id',
 );
 
 router.patch('/logic-delete/:id',
-//   validatorHandler(getUserSchema, 'params'),
+  validatorHandler(getActivitySchema, 'params'),
   async (req, res, next) => {
     try {
       const { id } = req.params;
