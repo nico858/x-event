@@ -213,7 +213,7 @@ router.patch('/:id',
 );
 
 router.delete('/:id',
-  passport.authenticate('jwt', { session: false }),
+//   passport.authenticate('jwt', { session: false }),
   validatorHandler(getActivitySchema, 'params'),
   async (req, res, next) => {
     try {
