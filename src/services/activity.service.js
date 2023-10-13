@@ -36,7 +36,9 @@ export default class ActivityService {
   }
 
   async logicDelete(id) {
-    const activity = await Activity.findOne(id);
-    const response = await Activity.update({ active: 'inactive' });
+    const activity = await this.findOne(id);
+    const updateActive = { active: 'inactive' };
+    const response = await user.update(updateActive);
+    return response;
   }
 }

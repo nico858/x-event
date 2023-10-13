@@ -132,7 +132,7 @@
  *         description: The user was deleted
  *       404:
  *         description: The user was not found
- * /logic-delete/{id}:  
+ * /user/logic-delete/{id}:  
  *   patch:
  *     summary: Deactivate user by id
  *     tags: [User]
@@ -146,10 +146,6 @@
  *     responses:
  *       200:
  *         description: The user was disabled
- *         content:
- *           application/json:
- *             schema:
- *               $ref: '#/components/schemas/User'
  *       404:
  *         description: The user was not found
  *       500:
