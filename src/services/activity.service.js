@@ -25,11 +25,7 @@ export default class ActivityService {
 
   async update(id, changes) {
     const activity = await this.findOne(id);
-    console.log(`[3] activity: ${activity}`);
-    console.log(activity.id);
     const response = await activity.update(changes);
-    console.log(`[4] response: ${response}`);
-    console.log(response);
     return response;
   }
 
@@ -42,7 +38,7 @@ export default class ActivityService {
   async logicDelete(id) {
     const activity = await this.findOne(id);
     const updateActive = { active: 'inactive' };
-    const response = await user.update(updateActive);
+    const response = await activity.update(updateActive);
     return response;
   }
 }
