@@ -3,9 +3,11 @@ import swaggerjsdoc from 'swagger-jsdoc';
 import swagger from 'swagger-ui-express';
 import session from 'express-session';
 import morgan from 'morgan';
+import passport from 'passport';
 
 import routerAPi from './routes/index.js';
 import { connection } from '../db/models/index.js';
+import { LocalStrategy } from './utils/aut/strategies/local.strategy.js';
 
 const app = express();
 const port = process.env.PORT || 3000;
@@ -22,6 +24,8 @@ app.use(
       saveUninitialized: false,
     })
 );
+
+passport.use(LocalStrategy);
 
 const options = {
     definition: {

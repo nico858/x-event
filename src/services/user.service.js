@@ -1,4 +1,5 @@
 import boom from '@hapi/boom';
+import bcrypt from 'bcrypt';
 
 import { User } from '../../db/models/index.js';
 
@@ -6,12 +7,21 @@ export default class UserService {
   constructor() {}
 
   async create(data) {
-    const newUser = await User.create(data);
+    const hash = await bcrypt.hash(data.password, 10);
+    const newUser = await User.create({
+      ...data,
+      password: hash
+    });
     return newUser;
   }
 
   async find() {
     const response = await User.findAll();
+    return response;
+  }
+
+  async findByEmail(email) {
+    const response = await User.findOne({ where: { email } });
     return response;
   }
 
