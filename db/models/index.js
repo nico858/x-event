@@ -28,5 +28,28 @@ export const Participant = ParticipantModel(connection, Sequelize);
 export const Registration = RegistrationModel(connection, Sequelize);
 export const User = UserModel(connection, Sequelize);
 
+// Associations
+User.hasMany(Contacts, { as: 'contacts', foreignKey: 'id' });
+Contacts.belongsTo(User, {  as: 'contact', foreignKey: 'contact' });
+
+User.hasMany(Event, { as: 'events', foreignKey: 'id' });
+Event.belongsTo(User, {  as: 'owner', foreignKey: 'creator' });
+
+Event.hasMany(Participant, { as: 'participants', foreignKey: 'id' });
+Participant.belongsTo(Event, {  as: 'event', foreignKey: 'eventId' });
+
+Event.hasMany(Balance, { as: 'balances', foreignKey: 'id' });
+Balance.belongsTo(Event, {  as: 'event', foreignKey: 'eventId' });
+
+Event.hasMany(Activity, { as: 'activities', foreignKey: 'id' });
+Activity.belongsTo(Event, {  as: 'event', foreignKey: 'eventId' });
+
+Participant.hasMany(Balance, { as: 'balances', foreignKey: 'id' });
+Balance.belongsTo(Participant, {  as: 'participant', foreignKey: 'participantId' });
+
+Participant.hasMany(Registration, { as: 'registrations', foreignKey: 'id' });
+Registration.belongsTo(Participant, {  as: 'participant', foreignKey: 'participantId' });
+
+
 
 connection.sync({ alter: true });
