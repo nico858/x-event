@@ -26,6 +26,7 @@ app.use(
     })
 );
 
+//Executing error handlers
 app.use(errorHandler);
 app.use(boomErrorHandler);
 app.use(ormErrorHandler);

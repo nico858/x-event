@@ -6,6 +6,7 @@ export function logErrors (err, req, res, next) {
   next(err);
 }
 
+//General error
 export function errorHandler(err, req, res, next) {
   const statusCode = err.statusCode || 500;
   const message = err.message || 'Internal server error';
@@ -17,6 +18,7 @@ export function errorHandler(err, req, res, next) {
   });
 }
 
+//Boom error
 export function boomErrorHandler(err, req, res, next) {
   if (err.isBoom) {
     const { output } = err;
@@ -28,6 +30,7 @@ export function boomErrorHandler(err, req, res, next) {
   next(err);
 }
 
+//Sequelize error
 export function ormErrorHandler(err, req, res, next) {
   if (err instanceof ValidationError) {
     res.status(409).json({
