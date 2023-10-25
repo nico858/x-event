@@ -1,6 +1,5 @@
 import { Sequelize } from 'sequelize';
 
-
 import { config } from '../../src/config/config.js';
 
 export const connection = new Sequelize(config.dbLink, {
@@ -12,7 +11,6 @@ export const connection = new Sequelize(config.dbLink, {
     }
 });
 
-// import connection from "../database.js";
 import { ActivityModel } from "./activity.model.js";
 import { BalanceModel } from "./balance.model.js";
 import { ContactsModel } from "./contacts.model.js";

@@ -2,14 +2,18 @@ import express from 'express';
 import swaggerjsdoc from 'swagger-jsdoc';
 import swagger from 'swagger-ui-express';
 import session from 'express-session';
+import cors from 'cors';
 import morgan from 'morgan';
+import passport from 'passport';
 
 import routerAPi from './routes/index.js';
 import { connection } from '../db/models/index.js';
+import { LocalStrategy } from './utils/aut/strategies/local.strategy.js';
 
 const app = express();
 const port = process.env.PORT || 3000;
 
+app.use(cors());
 routerAPi(app);
 
 app.use(express.json());
@@ -22,6 +26,8 @@ app.use(
       saveUninitialized: false,
     })
 );
+
+passport.use(LocalStrategy);
 
 const options = {
     definition: {
@@ -45,15 +51,6 @@ app.use(
     swagger.serve,
     swagger.setup(spacs)
 )
-
-
-await connection.sync({ force: true }, async () => {
-    try {
-        console.log('Database sync');
-    } catch (error) {
-        console.error('Unable to sync to the database:', error);
-    }
-});
 
 app.listen(port, async () => {
     try{
