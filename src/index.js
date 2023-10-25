@@ -8,6 +8,7 @@ import passport from 'passport';
 import routerAPi from './routes/index.js';
 import { connection } from '../db/models/index.js';
 import { LocalStrategy } from './utils/aut/strategies/local.strategy.js';
+import { errorHandler, boomErrorHandler, ormErrorHandler } from './middlewares/error.hanlder.js'
 
 const app = express();
 const port = process.env.PORT || 3000;
@@ -24,6 +25,10 @@ app.use(
       saveUninitialized: false,
     })
 );
+
+app.use(errorHandler);
+app.use(boomErrorHandler);
+app.use(ormErrorHandler);
 
 passport.use(LocalStrategy);
 
