@@ -2,6 +2,7 @@ import express from 'express';
 import swaggerjsdoc from 'swagger-jsdoc';
 import swagger from 'swagger-ui-express';
 import session from 'express-session';
+import cors from 'cors';
 import morgan from 'morgan';
 import passport from 'passport';
 
@@ -13,6 +14,7 @@ import { errorHandler, boomErrorHandler, ormErrorHandler } from './middlewares/e
 const app = express();
 const port = process.env.PORT || 3000;
 
+app.use(cors());
 routerAPi(app);
 
 app.use(express.json());
