@@ -9,14 +9,14 @@ export const RegistrationModel = (connection, DataTypes) => {
       participantId: {
         field: 'participant_id',
         allowNull: false,
-        type: DataTypes.STRING,
+        type: DataTypes.INTEGER,
         onUpdate: 'CASCADE',
         onDelete: 'CASCADE'
       },
       activityId: {
         field: 'activity_id',
         allowNull: false,
-        type: DataTypes.STRING,
+        type: DataTypes.INTEGER,
         onUpdate: 'CASCADE',
         onDelete: 'CASCADE'
       },

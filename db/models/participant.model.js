@@ -9,7 +9,7 @@ export const ParticipantModel = (connection, DataTypes) => {
       eventId: {
         field: 'event_id',
         allowNull: false,
-        type: DataTypes.STRING,
+        type: DataTypes.INTEGER,
         onUpdate: 'CASCADE',
         onDelete: 'CASCADE'
       },
