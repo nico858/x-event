@@ -29,9 +29,10 @@ app.use(
 );
 
 //Executing error handlers
+app.use(ormErrorHandler);
 app.use(errorHandler);
 app.use(boomErrorHandler);
-app.use(ormErrorHandler);
+
 
 passport.use(LocalStrategy);
 
