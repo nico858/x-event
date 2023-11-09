@@ -1,12 +1,27 @@
 import boom from '@hapi/boom';
 
-import { Activity } from '../../db/models/index.js';
+import { Activity, User, Event } from '../../db/models/index.js';
 
 export default class ActivityService {
   constructor() {}
 
   async create(data) {
     const newActivity = await Activity.create(data);
+    const { creatorId, eventId } = data;
+
+    const user = await User.findOne({ id: creatorId });
+    if (!user) {
+      throw boom.notFound('User not found');
+    }
+
+    const event = await Event.findOne({ id: eventId });
+    if (!event) {
+      throw boom.notFound('Event not found');
+    }
+
+    const newCost = event.cost + newActivity.cost;
+    await event.update({ cost: newCost })
+
     return newActivity;
   }
 
