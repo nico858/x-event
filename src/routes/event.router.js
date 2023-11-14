@@ -133,6 +133,28 @@
  *         description: The Event was deleted
  *       404:
  *         description: The Event was not found
+ * /event/byUser{userId}:
+ *   get:
+ *     summary: Get the Event by contact (userId)
+ *     tags: [Event]
+ *     parameters:
+ *       - in: path
+ *         name: userId
+ *         schema:
+ *           type: string
+ *         required: true
+ *         description: The contact id
+ *     responses:
+ *       200:
+ *         description: The Event response by userId
+ *         contens:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/Event'
+ *       404:
+ *         description: The Event was not found
+ *       500:
+ *         description: Some error happened
  * /event/logic-delete/{id}:  
  *   patch:
  *     summary: Deactivate Event by id
