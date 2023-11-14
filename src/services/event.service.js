@@ -23,6 +23,14 @@ export default class EventService {
     return event;
   }
 
+  async findByUser(userId) {
+    const events = await Event.findAll({ where: { creator: userId } })
+    if (!events) {
+      throw boom.notFound('The user does not have any events');
+    }
+    return events;
+  }
+
   async update(id, changes) {
     const event = await this.findOne(id);
     const response = await event.update(changes);

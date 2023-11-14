@@ -188,6 +188,18 @@ router.get('/:id',
   }
 );
 
+router.get('/byUser/:userId',
+  async (req, res, next) => {
+    try {
+      const { userId } = req.params;
+      const events = await service.findByUser(userId);
+      res.json(events);
+    } catch (error) {
+      next(error);
+    }
+  }
+);
+
 router.post('/',
   validatorHandler(createEventSchema, 'body'),
   async (req, res, next) => {
