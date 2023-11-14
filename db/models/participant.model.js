@@ -13,6 +13,13 @@ export const ParticipantModel = (connection, DataTypes) => {
         onUpdate: 'CASCADE',
         onDelete: 'CASCADE'
       },
+      userId: {
+        field: 'user_id',
+        allowNull: false,
+        type: DataTypes.INTEGER,
+        onUpdate: 'CASCADE',
+        onDelete: 'CASCADE'
+      },
       state: {
         allowNull: false,
         type: DataTypes.STRING,
