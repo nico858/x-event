@@ -38,6 +38,22 @@ export default class ActivityService {
     return activity;
   }
 
+  async findByUser(creatorId) {
+    const activities = await Activity.findAll({ where: { creatorId: creatorId } });
+    if (!activities) {
+      throw boom.notFound('The user does not have any activities')
+    }
+    return activities;
+  }
+
+  async findByEvent(eventId) {
+    const activities = await Activity.findAll({ where: { eventId: eventId } });
+    if (!activities) {
+      throw boom.notFound('The event does not have any activities')
+    }
+    return activities;
+  }
+
   async update(id, changes) {
     const activity = await this.findOne(id);
     const response = await activity.update(changes);

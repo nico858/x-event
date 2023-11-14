@@ -184,6 +184,32 @@ router.get('/:id',
   }
 );
 
+router.get('/byCreator/:creatorId',
+  validatorHandler(getActivitySchema, 'params'),
+  async (req, res, next) => {
+    try {
+      const { id } = req.params;
+      const activities = await service.findByUser(id);
+      res.json(activities);
+    } catch (error) {
+      next(error);
+    }
+  }
+);
+
+router.get('/byEvent/:eventId',
+  validatorHandler(getActivitySchema, 'params'),
+  async (req, res, next) => {
+    try {
+      const { id } = req.params;
+      const activities = await service.findByEvent(id);
+      res.json(activities);
+    } catch (error) {
+      next(error);
+    }
+  }
+);
+
 router.post('/',
   validatorHandler(createActivitySchema, 'body'),
   async (req, res, next) => {
