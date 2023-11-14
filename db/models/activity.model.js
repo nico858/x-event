@@ -6,6 +6,10 @@ export const ActivityModel = (connection, DataTypes) => {
         primaryKey: true,
         type: DataTypes.INTEGER
       },
+      name: {
+        allowNull: false,
+        type: DataTypes.STRING
+      },
       eventId: {
         field: 'event_id',
         allowNull: false,
