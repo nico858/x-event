@@ -1,6 +1,6 @@
 import boom from '@hapi/boom';
 
-import { Activity, User, Event } from '../../db/models/index.js';
+import { Activity, User, Event, Registration } from '../../db/models/index.js';
 
 export default class ActivityService {
   constructor() {}
@@ -22,6 +22,13 @@ export default class ActivityService {
     const newCost = event.cost + newActivity.cost;
     await event.update({ cost: newCost })
 
+    const newRegistration = Registration.create({
+      participantId: creatorId,
+      activityId: newActivity.id,
+      percentage: 0
+    });
+    
+    console.log(newRegistration);
     return newActivity;
   }
 

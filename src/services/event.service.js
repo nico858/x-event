@@ -1,12 +1,21 @@
 import boom from '@hapi/boom';
 
-import { Event } from '../../db/models/index.js';
+import { Event, Participant } from '../../db/models/index.js';
 
 export default class EventService {
   constructor() {}
 
   async create(data) {
     const newEvent = await Event.create(data);
+
+    const newParticipant = await Participant.create({
+      eventId: newEvent.id,
+      userId: newEvent.creator,
+      state: 'accepted',
+      cost: 0
+    });
+
+    console.log(newParticipant);
     return newEvent;
   }
 
