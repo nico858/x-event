@@ -64,13 +64,26 @@ export default class ActivityService {
     return activities;
   }
 
-  async findByUserParticipant(participantId) {
-    const registration = await Registration.findAll({ where: { participantId: participantId } });
-    if (!registration) {
-      throw boom.notFound('The participant is not registered in any activity')
-    }
-    return registration;
+  async findByParticipant(userId) {
+    const user = await User.findByPk(userId);
+    const participations = await Participant.findAll({ where: { userId: userId } });
+
   }  
+
+  async findByParticipant(userId) {
+    const events = await Event.findAll({
+      include: [
+        {
+          model: Participant,
+          where: { userId: userId }
+        }
+      ]
+    })
+    if (!events) {
+      throw boom.notFound('The user is not participant of any events');
+    }
+    return events;
+  }
 
   async update(id, changes) {
     const activity = await this.findOne(id);

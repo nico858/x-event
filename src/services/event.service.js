@@ -40,6 +40,21 @@ export default class EventService {
     return events;
   }
 
+  async findByParticipant(userId) {
+    const events = await Event.findAll({
+      include: [
+        {
+          model: Participant,
+          where: { userId: userId }
+        }
+      ]
+    })
+    if (!events) {
+      throw boom.notFound('The user is not participant of any events');
+    }
+    return events;
+  }
+
   async update(id, changes) {
     const event = await this.findOne(id);
     const response = await event.update(changes);
