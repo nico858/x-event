@@ -35,8 +35,8 @@ Contacts.belongsTo(User, {  as: 'userContact', foreignKey: 'userId' });
 User.hasMany(Participant, { as: 'participation', foreignKey: 'id' });
 Participant.belongsTo(User, {  as: 'user', foreignKey: 'userId' });
 
-Event.hasMany(Participant, { as: 'participants', foreignKey: 'id' });
-Participant.belongsTo(Event, {  as: 'event', foreignKey: 'eventId' });
+Event.hasMany(Participant, { as: 'participants', foreignKey: 'userId' });
+Participant.belongsTo(Event, {  as: 'events', foreignKey: 'eventId' });
 
 Event.hasMany(Balance, { as: 'balances', foreignKey: 'id' });
 Balance.belongsTo(Event, {  as: 'event', foreignKey: 'eventId' });
@@ -47,8 +47,8 @@ Activity.belongsTo(Event, {  as: 'event', foreignKey: 'eventId' });
 Participant.hasMany(Balance, { as: 'balances', foreignKey: 'id' });
 Balance.belongsTo(Participant, {  as: 'participant', foreignKey: 'participantId' });
 
-Participant.hasMany(Registration, { as: 'userRegistration', foreignKey: 'id' });
-Registration.belongsTo(Participant, {  as: 'participant', foreignKey: 'participantId' });
+User.hasMany(Registration, { as: 'userRegistration', foreignKey: 'id' });
+Registration.belongsTo(User, {  as: 'regist', foreignKey: 'userId' });
 
 Activity.hasMany(Registration, { as: 'registrations', foreignKey: 'id' });
 Registration.belongsTo(Activity, {  as: 'activity', foreignKey: 'activityId' });

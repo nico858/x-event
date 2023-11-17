@@ -14,10 +14,10 @@ export default class ActivityService {
       throw boom.notFound('Event not found');
     }
 
-    const participant = await Participant.findOne({ where: { userId: creatorId, eventId: eventId } });
-    if (!participant) {
-      throw boom.notFound('The user is not a participant of the event');
-    }
+    // const participant = await Participant.findOne({ where: { userId: creatorId, eventId: eventId } });
+    // if (!participant) {
+    //   throw boom.notFound('The user is not a participant of the event');
+    // }
 
     const newActivity = await Activity.create(data);
 
@@ -25,7 +25,7 @@ export default class ActivityService {
     await event.update({ cost: newCost })
 
     const newRegistration = await Registration.create({
-      participantId: participant.id,
+      participantId: newActivity.creatorId,
       activityId: newActivity.id,
       percentage: 0
     });

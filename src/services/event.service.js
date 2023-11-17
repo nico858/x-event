@@ -16,7 +16,8 @@ export default class EventService {
       cost: 0
     });
 
-    await newEvent.update({ creator: newParticipant.id });
+    console.log('[1]');
+    console.log(newParticipant);
 
     return newEvent;
   }
