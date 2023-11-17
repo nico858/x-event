@@ -32,7 +32,7 @@ export const User = UserModel(connection, Sequelize);
 User.hasMany(Contacts, { as: 'contact', foreignKey: 'id' });
 Contacts.belongsTo(User, {  as: 'userContact', foreignKey: 'userId' });
 
-User.hasMany(Event, { as: 'events', foreignKey: 'id' });
+User.hasMany(Participant, { as: 'participation', foreignKey: 'id' });
 Participant.belongsTo(User, {  as: 'user', foreignKey: 'userId' });
 
 Event.hasMany(Participant, { as: 'participants', foreignKey: 'id' });

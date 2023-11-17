@@ -65,9 +65,18 @@ export default class ActivityService {
   }
 
   async findByParticipant(userId) {
-    const user = await User.findByPk(userId);
     const participations = await Participant.findAll({ where: { userId: userId } });
+    if (!participations) {
+      throw boom.notFound('The user is not participant of any events');
+    }
 
+    await Promise.all(participations.map(async (participation) => {
+      const registrations = await Registration.findAll({ where: { participantId: participation.id } });
+      await Promise.all(registrations.map(async (registration) => {
+        const activity = await Activity.findByPk(registration.activityId);
+        return activity;
+      }));
+    }));
   }  
 
   async findByParticipant(userId) {

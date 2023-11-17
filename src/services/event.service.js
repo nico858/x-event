@@ -1,6 +1,7 @@
 import boom from '@hapi/boom';
 
 import { Event, Participant } from '../../db/models/index.js';
+import { connection } from '../../db/models/index.js';
 
 export default class EventService {
   constructor() {}
@@ -15,7 +16,8 @@ export default class EventService {
       cost: 0
     });
 
-    console.log(newParticipant);
+    await newEvent.update({ creator: newParticipant.id });
+
     return newEvent;
   }
 
