@@ -1,12 +1,19 @@
 import boom from '@hapi/boom';
 import bcrypt from 'bcrypt';
 
-import { Participant } from '../../db/models/index.js';
+import { Participant, User } from '../../db/models/index.js';
 
 export default class ParticipantService {
   constructor() {}
 
   async create(data) {
+    const userId = data.userId;
+    
+    const isUser = await User.findOne({ where: { id: userId } });
+    if (!isUser) {
+      throw boom.notFound('User not found');
+    }
+
     const newParticipant = await Participant.create(data);
     return newParticipant;
   }

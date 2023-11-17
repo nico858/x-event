@@ -35,7 +35,7 @@ export default class EventService {
   async findByUser(userId) {
     const events = await Event.findAll({ where: { creator: userId } })
     if (!events) {
-      throw boom.notFound('The user does not have any events');
+      throw boom.notFound('The user is not the creator any events');
     }
     return events;
   }

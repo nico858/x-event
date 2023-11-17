@@ -1,29 +1,31 @@
 import boom from '@hapi/boom';
 
-import { Activity, User, Event, Registration } from '../../db/models/index.js';
+import { Activity, User, Event, Registration, Participant } from '../../db/models/index.js';
 
 export default class ActivityService {
   constructor() {}
 
   async create(data) {
-    const newActivity = await Activity.create(data);
-    const { creatorId, eventId } = data;
 
-    const user = await User.findOne({ id: creatorId });
-    if (!user) {
-      throw boom.notFound('User not found');
-    }
+    const { creatorId, eventId } = data;
 
     const event = await Event.findOne({ id: eventId });
     if (!event) {
       throw boom.notFound('Event not found');
     }
 
+    const participant = await Participant.findOne({ where: { userId: creatorId, eventId: eventId } });
+    if (!participant) {
+      throw boom.notFound('The user is not a participant of the event');
+    }
+
+    const newActivity = await Activity.create(data);
+
     const newCost = event.cost + newActivity.cost;
     await event.update({ cost: newCost })
 
     const newRegistration = await Registration.create({
-      participantId: creatorId,
+      participantId: participant.id,
       activityId: newActivity.id,
       percentage: 0
     });
@@ -61,6 +63,14 @@ export default class ActivityService {
     }
     return activities;
   }
+
+  async findByUserParticipant(participantId) {
+    const registration = await Registration.findAll({ where: { participantId: participantId } });
+    if (!registration) {
+      throw boom.notFound('The participant is not registered in any activity')
+    }
+    return registration;
+  }  
 
   async update(id, changes) {
     const activity = await this.findOne(id);
