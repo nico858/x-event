@@ -22,7 +22,8 @@ export const ParticipantModel = (connection, DataTypes) => {
       },
       state: {
         allowNull: false,
-        type: DataTypes.STRING,
+        type: DataTypes.ENUM('accepted', 'pending', 'rejected'),
+        defaultValue: 'pending'
       },
       cost: {
         allowNull: false,

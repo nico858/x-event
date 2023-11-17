@@ -22,12 +22,13 @@ export default class ActivityService {
     const newCost = event.cost + newActivity.cost;
     await event.update({ cost: newCost })
 
-    const newRegistration = Registration.create({
+    const newRegistration = await Registration.create({
       participantId: creatorId,
       activityId: newActivity.id,
       percentage: 0
     });
-    
+    console.log('[1]');
+    console.log(newActivity.id);
     console.log(newRegistration);
     return newActivity;
   }

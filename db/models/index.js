@@ -29,11 +29,11 @@ export const Registration = RegistrationModel(connection, Sequelize);
 export const User = UserModel(connection, Sequelize);
 
 // Associations
-User.hasMany(Contacts, { as: 'contacts', foreignKey: 'id' });
-Contacts.belongsTo(User, {  as: 'userContact', foreignKey: 'contact' });
+User.hasMany(Contacts, { as: 'contact', foreignKey: 'id' });
+Contacts.belongsTo(User, {  as: 'userContact', foreignKey: 'userId' });
 
 User.hasMany(Event, { as: 'events', foreignKey: 'id' });
-Event.belongsTo(User, {  as: 'owner', foreignKey: 'creator' });
+Participant.belongsTo(User, {  as: 'user', foreignKey: 'userId' });
 
 Event.hasMany(Participant, { as: 'participants', foreignKey: 'id' });
 Participant.belongsTo(Event, {  as: 'event', foreignKey: 'eventId' });

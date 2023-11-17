@@ -12,14 +12,16 @@ export const ContactsModel = (connection, DataTypes) => {
         onUpdate: 'CASCADE',
         onDelete: 'CASCADE'
       },
-      email: {
+      userId: {
         allowNull: false,
-        type: DataTypes.STRING,
-        unique: true,
+        type: DataTypes.INTEGER,
+        onUpdate: 'CASCADE',
+        onDelete: 'CASCADE'
       },
       state: {
         allowNull: false,
-        type: DataTypes.STRING
+        type: DataTypes.ENUM('accepted', 'pending', 'rejected'),
+        defaultValue: 'pending'
       },
     })
   }

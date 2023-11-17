@@ -24,6 +24,22 @@ export default class ParticipantService {
     return participant;
   }
 
+  async findByUser(userId) {
+    const response = await Participant.findAll({ where: { userId } });
+    if (!response) {
+      throw boom.notFound('The user is not a participant')
+    }
+    return response;
+  }
+
+  async findByEvent(eventId) {
+    const response = await Participant.findAll({ where: { eventId } });
+    if (!response) {
+      throw boom.notFound('The participant is not in the event')
+    }
+    return response;
+  }
+
   async update(id, changes) {
     const participant = await this.findOne(id);
     const response = await participant.update(changes);
