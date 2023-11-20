@@ -44,17 +44,16 @@ export default class EventService {
   }
 
   async findByParticipant(userId) {
-    const events = await Event.findAll({
-      include: [
-        {
-          model: Participant,
-          where: { userId: userId }
-        }
-      ]
-    })
-    if (!events) {
-      throw boom.notFound('The user is not participant of any events');
+    const participations = await Participant.findAll({ where: { userId: userId } });
+    if (!participations) {
+      throw boom.notFound('The user is not a participant of any event');
     }
+
+    const events = await Promise.all(participations.map(async (participation) => {
+      const event = await Event.findByPk(participation.eventId);
+      return event;
+    }));
+
     return events;
   }
 
