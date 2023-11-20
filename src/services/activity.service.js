@@ -64,35 +64,19 @@ export default class ActivityService {
     return activities;
   }
 
-  async findByParticipant(userId) {
-    const participations = await Participant.findAll({ where: { userId: userId } });
-    if (!participations) {
-      throw boom.notFound('The user is not participant of any events');
+  async findByRegistration(userId) {
+    const registrations = await Registration.findAll({ where: { participantId: userId } });
+    if (!registrations) {
+      throw boom.notFound('The user is not a participant of any activities');
     }
 
-    await Promise.all(participations.map(async (participation) => {
-      const registrations = await Registration.findAll({ where: { participantId: participation.id } });
-      await Promise.all(registrations.map(async (registration) => {
-        const activity = await Activity.findByPk(registration.activityId);
-        return activity;
-      }));
+    const activities = await Promise.all(registrations.map(async (registration) => {
+      const activity = await Activity.findByPk(registration.activityId);
+      return activity;
     }));
-  }  
 
-  async findByParticipant(userId) {
-    const events = await Event.findAll({
-      include: [
-        {
-          model: Participant,
-          where: { userId: userId }
-        }
-      ]
-    })
-    if (!events) {
-      throw boom.notFound('The user is not participant of any events');
-    }
-    return events;
-  }
+    return activities;
+  } 
 
   async update(id, changes) {
     const activity = await this.findOne(id);
