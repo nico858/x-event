@@ -187,6 +187,18 @@ router.get('/:id',
   }
 );
 
+router.get('/byNickName/nickname',
+  async (req, res, next) => {
+    try {
+      const { nickName } = req.body;
+      const user = await service.findByNickName(nickName);
+      res.json(user);
+    } catch (error) {
+      next(error);
+    }
+  }
+);
+
 router.post('/',
   validatorHandler(createUserSchema, 'body'),
   async (req, res, next) => {
