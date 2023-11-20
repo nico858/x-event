@@ -25,6 +25,14 @@ export default class UserService {
     return response;
   }
 
+  async findByNickName(nickName) {
+    const response = await User.findAll({ where: { nickName: nickName } });
+    if (!response) {
+      throw boom.notFound('User not found');
+    }
+    return response;
+  }
+
   async findOne(id) {
     const user = await User.findByPk(id);
     if (!user) {
