@@ -187,7 +187,7 @@ router.get('/:id',
   }
 );
 
-router.get('/byNickName/:nickname',
+router.get('/byNickName/:nickName',
   async (req, res, next) => {
     try {
       const { nickName } = req.params;
