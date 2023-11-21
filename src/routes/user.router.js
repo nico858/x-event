@@ -187,10 +187,10 @@ router.get('/:id',
   }
 );
 
-router.get('/byNickName/nickname',
+router.get('/byNickName/:nickname',
   async (req, res, next) => {
     try {
-      const { nickName } = req.body;
+      const { nickName } = req.params;
       const user = await service.findByNickName(nickName);
       res.json(user);
     } catch (error) {
