@@ -2,12 +2,12 @@ import Joi from 'joi';
 
 const id = Joi.number().integer();
 const contact = Joi.number().integer();
-const email = Joi.string().email();
+const userId = Joi.number().integer();
 const state = Joi.string();
 
 export const createContactSchema = Joi.object({
     contact: contact.required(),
-    email: email.required(),
+    userId: userId.required(),
     state: state.required(),
 });
   
