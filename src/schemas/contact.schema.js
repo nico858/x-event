@@ -13,7 +13,7 @@ export const createContactSchema = Joi.object({
   
 export const updateContactSchema = Joi.object({
     contact: contact,
-    email: email,
+    userId: userId,
     state: state,
 });
   
