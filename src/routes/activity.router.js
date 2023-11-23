@@ -198,11 +198,10 @@ router.get('/byCreator/:creatorId',
 );
 
 router.get('/byEvent/:eventId',
-  validatorHandler(getActivitySchema, 'params'),
   async (req, res, next) => {
     try {
-      const { id } = req.params;
-      const activities = await service.findByEvent(id);
+      const { eventId } = req.params;
+      const activities = await service.findByEvent(eventId);
       res.json(activities);
     } catch (error) {
       next(error);
