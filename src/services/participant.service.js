@@ -1,7 +1,7 @@
 import boom from '@hapi/boom';
 import bcrypt from 'bcrypt';
 
-import { Participant, User } from '../../db/models/index.js';
+import { Participant, User, Contacts, Event } from '../../db/models/index.js';
 
 export default class ParticipantService {
   constructor() {}
@@ -12,6 +12,21 @@ export default class ParticipantService {
     const isUser = await User.findOne({ where: { id: userId } });
     if (!isUser) {
       throw boom.notFound('User not found');
+    }
+
+    const event = await Event.findByPk(data.eventId);
+    if (!event) {
+      throw boom.notFound('Event not found');
+    }
+
+    const isParticipant = await Participant.findOne({ where: { userId: userId, eventId: data.eventId } });
+    if (isParticipant) {
+      throw boom.badRequest('The user is already a participant');
+    }
+
+    const isContact = await Contacts.findOne({ where: { userId: event.creator, contact: data.userId, state: "accepted" } });
+    if (event.creator !== userId && !isContact) {
+      throw boom.badRequest('The user is not a contact of the creator');
     }
 
     const newParticipant = await Participant.create(data);

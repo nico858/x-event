@@ -1,23 +1,33 @@
 import boom from '@hapi/boom';
 import bcrypt from 'bcrypt';
 
-import { Contacts } from '../../db/models/index.js';
+import { Contacts, User } from '../../db/models/index.js';
 
 export default class ContactService {
   constructor() {}
 
   async create(data) {
-    const newContact = await Contact.create(data);
+    const isUser = await User.findOne({ where: { id: data.userId } });
+    const isContactUser = await User.findOne({ where: { id: data.contact } });
+    if (!isUser || !isContactUser) {
+      throw boom.notFound('User not found');
+    }
+    const check1 = await Contacts.findOne({ where: { contact: data.contact, userId: data.userId } });
+    const check2 = await Contacts.findOne({ where: { contact: data.userId, userId: data.contact } });
+    if (check1 || check2) {
+      throw boom.badRequest('Contact already exists');
+    }
+    const newContact = await Contacts.create(data);
     return newContact;
   }
 
   async find() {
-    const response = await Contact.findAll();
+    const response = await Contacts.findAll();
     return response;
   }
 
   async findOne(id) {
-    const contact = await Contact.findByPk(id);
+    const contact = await Contacts.findByPk(id);
     if (!contact) {
       throw boom.notFound('Contacts not found');
     }
