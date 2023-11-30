@@ -12,6 +12,7 @@ export default class ContactService {
     if (!isUser || !isContactUser) {
       throw boom.notFound('User not found');
     }
+    
     const check1 = await Contacts.findOne({ where: { contact: data.contact, userId: data.userId } });
     const check2 = await Contacts.findOne({ where: { contact: data.userId, userId: data.contact } });
     if (check1 || check2) {
@@ -32,6 +33,14 @@ export default class ContactService {
       throw boom.notFound('Contacts not found');
     }
     return contact;
+  }
+
+  async findByUserId(userId, contactId) {
+    const response = await Contacts.findAll({ where: { userId: userId }});
+    if (!response) {
+      throw boom.notFound('Contact not found');
+    }
+    return response;
   }
 
   async update(id, changes) {

@@ -158,6 +158,18 @@ router.get('/:id',
   }
 );
 
+router.get('/byUserId/:userId',
+  async (req, res, next) => {
+    try {
+      const { userId } = req.params;
+      const contact = await service.findByUserId(userId);
+      res.json(contact);
+    } catch (error) {
+      next(error);
+    }
+  }
+);
+
 router.post('/',
   validatorHandler(createContactSchema, 'body'),
   async (req, res, next) => {
