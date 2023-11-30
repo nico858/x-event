@@ -176,6 +176,18 @@ router.get('/:id',
   }
 );
 
+router.get('/byEvent/:eventId',
+  async (req, res, next) => {
+    try {
+      const { eventId } = req.params;
+      const participants = await service.findByEvent(eventId);
+      res.json(participants);
+    } catch (error) {
+      next(error);
+    }
+  }
+);
+
 router.post('/',
   validatorHandler(createParticipantSchema, 'body'),
   async (req, res, next) => {
