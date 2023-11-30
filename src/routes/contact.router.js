@@ -198,6 +198,19 @@ router.patch('/:id',
   }
 );
 
+router.patch('/byUserId/:userId/contact/:contactId',
+  async (req, res, next) => {
+    try {
+      const { userId, contactId } = req.params;
+      const body = req.body;
+      const contact = await service.updateStateByContact(userId, contactId, body);
+      res.json(contact);
+    } catch (error) {
+      next(error);
+    }
+  }
+);
+
 router.delete('/:id',
   // passport.authenticate('jwt', { session: false }),
   validatorHandler(getContactSchema, 'params'),

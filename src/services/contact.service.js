@@ -43,6 +43,15 @@ export default class ContactService {
     return response;
   }
 
+  async updateStateByContact(userId, contactId, state) {
+    const contact = await Contacts.findOne({ where: { userId: userId, contact: contactId }});
+    if (!contact) {
+      throw boom.notFound('Contact not found');
+    }
+    const response = await contact.update(state);
+    return response;
+  }
+
   async update(id, changes) {
     const contact = await this.findOne(id);
     const response = await contact.update(changes);
