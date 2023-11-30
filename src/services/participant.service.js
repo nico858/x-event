@@ -56,7 +56,7 @@ export default class ParticipantService {
 
   async findByEvent(eventId) {
     const response = await Participant.findAll({ where: { eventId } });
-    if (!response) {
+    if (response.length === 0) {
       throw boom.notFound('The participant is not in the event')
     }
     return response;

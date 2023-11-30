@@ -158,6 +158,18 @@ router.get('/:id',
   }
 );
 
+router.get('/byActivity/:activityId',
+  async (req, res, next) => {
+    try {
+      const { activityId } = req.params;
+      const registrations = await service.findByActivity(activityId);
+      res.json(registrations);
+    } catch (error) {
+      next(error);
+    }
+  }
+);
+
 router.post('/',
   validatorHandler(createRegistrationSchema, 'body'),
   async (req, res, next) => {

@@ -31,6 +31,14 @@ export default class RegistrationService {
     return registration;
   }
 
+  async findByActivity(activityId) {
+    const registrations = await Registration.findAll({ where: { activityId: activityId } });
+    if (registrations.length === 0) {
+      throw boom.notFound('Registrations not found');
+    }
+    return registrations;
+  }
+
   async update(id, changes) {
     const registration = await this.findOne(id);
     const response = await registration.update(changes);
