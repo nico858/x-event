@@ -25,8 +25,11 @@ export default class ParticipantService {
     }
 
     const isContact = await Contacts.findOne({ where: { userId: event.creator, contact: data.userId, state: "accepted" } });
+    const isContact2 = await Contacts.findOne({ where: { userId: data.userId, contact: event.creator, state: "accepted" } });
     if (event.creator !== userId && !isContact) {
-      throw boom.badRequest('The user is not a contact of the creator');
+      if (!isContact2) {
+        throw boom.badRequest('The user is not a contact of the creator');
+      }   
     }
 
     const newParticipant = await Participant.create(data);
