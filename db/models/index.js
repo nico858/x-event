@@ -38,8 +38,8 @@ Participant.belongsTo(User, {  as: 'user', foreignKey: 'userId' });
 Event.hasMany(Participant, { as: 'participants', foreignKey: 'userId' });
 Participant.belongsTo(Event, {  as: 'events', foreignKey: 'eventId' });
 
-Event.hasMany(Balance, { as: 'balances', foreignKey: 'id' });
-Balance.belongsTo(Event, {  as: 'event', foreignKey: 'eventId' });
+Activity.hasMany(Balance, { as: 'balances', foreignKey: 'id' });
+Balance.belongsTo(Activity, {  as: 'activity', foreignKey: 'activityId' });
 
 Event.hasMany(Activity, { as: 'activities', foreignKey: 'id' });
 Activity.belongsTo(Event, {  as: 'event', foreignKey: 'eventId' });

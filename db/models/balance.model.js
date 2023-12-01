@@ -6,27 +6,27 @@ export const BalanceModel = (connection, DataTypes) => {
         primaryKey: true,
         type: DataTypes.INTEGER
       },
-      eventId: {
-        field: 'event_id',
+      activityId: {
+        field: 'activity_id',
         allowNull: false,
         type: DataTypes.INTEGER,
         onUpdate: 'CASCADE',
         onDelete: 'CASCADE'
       },
-      participantId: {
-        field: 'participant_id',
+      userId: {
+        field: 'user_id',
         allowNull: false,
         type: DataTypes.INTEGER,
         onUpdate: 'CASCADE',
         onDelete: 'CASCADE'
       },
-      // debtor: {
-      //   field: 'debtor',
-      //   allowNull: true,
-      //   type: DataTypes.INTEGER,
-      //   onUpdate: 'CASCADE',
-      //   onDelete: 'CASCADE'
-      // },
+      debtor: {
+        field: 'debtor',
+        allowNull: true,
+        type: DataTypes.INTEGER,
+        onUpdate: 'CASCADE',
+        onDelete: 'CASCADE'
+      },
       balance: {
         allowNull: false,
         type: DataTypes.DOUBLE
