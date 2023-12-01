@@ -20,6 +20,13 @@ export const BalanceModel = (connection, DataTypes) => {
         onUpdate: 'CASCADE',
         onDelete: 'CASCADE'
       },
+      // debtor: {
+      //   field: 'debtor',
+      //   allowNull: true,
+      //   type: DataTypes.INTEGER,
+      //   onUpdate: 'CASCADE',
+      //   onDelete: 'CASCADE'
+      // },
       balance: {
         allowNull: false,
         type: DataTypes.DOUBLE
