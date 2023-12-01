@@ -6,8 +6,8 @@ export const RegistrationModel = (connection, DataTypes) => {
         primaryKey: true,
         type: DataTypes.INTEGER
       },
-      participantId: {
-        field: 'participant_id',
+      userId: {
+        field: 'user_id',
         allowNull: false,
         type: DataTypes.INTEGER,
         onUpdate: 'CASCADE',
