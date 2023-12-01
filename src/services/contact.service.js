@@ -35,12 +35,13 @@ export default class ContactService {
     return contact;
   }
 
-  async findByUserId(userId, contactId) {
-    const response = await Contacts.findAll({ where: { userId: userId }});
+  async findByUserId(userId) {
+    const response = await Contacts.findAll({ where: { userId: userId, state: 'accepted' }});
+    const response2 = await Contacts.findAll({ where: { contact: userId, state: 'accepted'}});
     if (!response) {
       throw boom.notFound('Contact not found');
     }
-    return response;
+    return {response, response2};
   }
 
   async updateStateByContact(userId, contactId, state) {
