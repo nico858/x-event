@@ -220,7 +220,8 @@ router.patch('/acceptParticipantion/:userId/:eventId',
   async (req, res, next) => {
     try {
       const { userId, eventId } = req.params;
-      const participant = await service.acceptInvitation(userId, eventId);
+      const body = req.body;
+      const participant = await service.acceptInvitation(userId, eventId, state);
       res.json(participant);
     } catch (error) {
       next(error);

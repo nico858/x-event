@@ -54,4 +54,4 @@ Activity.hasMany(Registration, { as: 'registrations', foreignKey: 'id' });
 Registration.belongsTo(Activity, {  as: 'activity', foreignKey: 'activityId' });
 
 
-connection.sync({ alter: true });
+await connection.sync({ alter: true });

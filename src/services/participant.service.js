@@ -65,12 +65,12 @@ export default class ParticipantService {
     return response;
   }
 
-  async acceptInvitation(userId, eventId) {
+  async acceptInvitation(userId, eventId, state) {
     const participant = await Participant.findOne({ where: { userId: userId, eventId: eventId } });
     if (!participant) {
       return (`The ${userId} is not a participant of the event ${eventId}`);
     }
-    const response = await participant.update({ state: 'accepted' });
+    const response = await participant.update({ state: state });
     return response;
   }
 
